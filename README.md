@@ -1,12 +1,24 @@
 # PGA2311
 ## Overview
-C++ driver for [TI PGA2311 preamp](https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwi23ff26vrZAhXDLFAKHUdOAIgQFggoMAA&url=http%3A%2F%2Fwww.ti.com%2Flit%2Fds%2Fsymlink%2Fpga2311.pdf&usg=AOvVaw3ad1rSntvFvn3osHrvtlA2) 
+C driver for :
+ * [TI PGA2311 preamp](hhttp://www.ti.com/lit/ds/symlink/pga2311.pdf) 
+ * [CIRRUS Logic CS3310](https://www.cirrus.com/products/cs3310/)
 
 ## Supported targets
-Any Arduino target having :
- * SPI (5V tolerant) with these pins :
-   * MOSI
-   * CS
-   * CLK
+STM32s with HAL
 
 ## Code snippet
+
+	TsPGA2311 loc_s_pga2311 = {
+			._ps_spi = arg_ps_spiHandle,
+
+	};
+
+	PGA2311_init(&loc_s_pga2311);
+
+	for(float loc_f_gain = PGA2311_MIN_GAIN; loc_f_gain <= PGA2311_MAX_GAIN; loc_f_gain++)
+	{
+		printf("set gain to %f", loc_f_gain);
+		HAL_Delay(50);
+		PGA2311_setGain(&loc_s_pga2311, loc_f_gain, loc_f_gain);
+	}
